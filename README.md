@@ -1,4 +1,4 @@
-****Most of backend logic has been written, but AI/Machine Learning components still need serious work. Custom models need to be crafted and trained****
+****Most of backend logic has been written. Training the initial models is currently a working process****
 
 
 This chatbot adapts to individual learning styles, offers dynamic tutoring across various subjects, and provides teachers with tools to customize lessons, generate study material, and monitor student progress.
