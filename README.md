@@ -1,10 +1,4 @@
-Let me break down this educational chatbot project in simple terms:
-
-1. **The Core Purpose** 
-
-🚀 Educational Chatbot Overview
-
-The Educational Chatbot is an AI-powered virtual tutor designed to assist both students and teachers in enhancing learning outcomes. This chatbot adapts to individual learning styles, offers dynamic tutoring across various subjects, and provides teachers with tools to customize lessons, generate study material, and monitor student progress.
+This Educational Bot is an AI-powered virtual tutor designed to assist both students and teachers in enhancing learning outcomes. This chatbot adapts to individual learning styles, offers dynamic tutoring across various subjects, and provides teachers with tools to customize lessons, generate study material, and monitor student progress.
 
 Its advanced training pipeline ensures ongoing improvement through initial training, fine-tuning, and continuous training mechanisms, delivering an ever-evolving AI model tailored to meet educational needs.
 
