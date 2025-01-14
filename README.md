@@ -6,7 +6,7 @@ Its advanced training pipeline ensures ongoing improvement through initial train
 
 
 
-👩‍🎓 ****For Students:****
+****For Students:****
 	•	Interactive Learning: Ask questions, get explanations, and solve problems in real-time.
 	•	Homework Assistance: Receive hints and structured guidance without direct answers.
 	•	Personalized Tutoring: Adapts teaching style based on individual learning patterns.
