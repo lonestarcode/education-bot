@@ -1,5 +1,5 @@
 Education Bot trained on custom models, managed by teachers, designed to assist students in enhancing learning outcomes. 
-This bot offers dynamic tutoring across various subjects, provides teachers with tools to customize lessons, generate study material, allows for chat with students, adapts to individual learning styles and monitors student progress.
+This bot offers dynamic tutoring across various subjects, provides teachers with tools to customize lessons, aids with homework and generates study material, allows for chat with students, adapts to individual learning styles, and monitors student progress.
 
 Its advanced training pipeline ensures ongoing improvement through initial training, fine-tuning, and continuous training mechanisms, delivering an ever-evolving AI model tailored to meet educational needs.
 
