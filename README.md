@@ -1,4 +1,4 @@
-AI-powered virtual tutor trained on custom models, managed by teachers, designed to assist students in enhancing learning outcomes. 
+Education Bot trained on custom models, managed by teachers, designed to assist students in enhancing learning outcomes. 
 This bot offers dynamic tutoring across various subjects, provides teachers with tools to customize lessons, generate study material, allows for chat with students, adapts to individual learning styles and monitors student progress.
 
 Its advanced training pipeline ensures ongoing improvement through initial training, fine-tuning, and continuous training mechanisms, delivering an ever-evolving AI model tailored to meet educational needs.
@@ -55,21 +55,21 @@ Teachers can upload topics of interest and curriculum for bot to analyze, track 
 
 
 
-⚙️ **AI Model Lifecycle: Training and Evolution**
+ **AI Model Lifecycle: Training and Evolution**
 
-📊 1. Initial Training
+ 1. Initial Training
 	•	Purpose: Build a robust foundation by training the model on extensive K-12 subject datasets.
 	•	Location: models/initial_training/
 	•	Significance: This phase ensures the model understands core concepts across subjects like Math, Science, History, English, Art, and Spanish.
 	•	Outcome: Base AI models with generalized knowledge suitable for initial deployment.
 
-📈 2. Fine-Tuning
+ 2. Fine-Tuning
 	•	Purpose: Refine the model’s accuracy by aligning it with specific classroom or institutional requirements.
 	•	Location: models/fine_tuning/
 	•	Significance: Fine-tuning adjusts weights and biases in the AI based on feedback from real classroom interactions.
 	•	Outcome: Enhanced subject-specific AI models customized for actual teaching environments.
 
-🔄 3. Continuous Training
+ 3. Continuous Training
 	•	Purpose: Adjust the chatbot’s personality and teaching style daily based on real-time student interactions.
 	•	Location: models/continuous_training/
 	•	Significance: Continuous training focuses not on introducing new subject material but on refining how the chatbot communicates and adapts to students’ emotional and academic needs.
@@ -113,14 +113,14 @@ Technical Structure
 
 ========== FRONTEND (React & REST APIs) ====================
 
-🖥️ Frontend Architecture
+ Frontend Architecture
 - React with TypeScript
 - Redux Toolkit for state management
 - React Router v6 for navigation
 - Tailwind CSS for styling
 - Axios for API calls
 
-📱 Key Components
+ Key Components
 1. Student Dashboard
    - Real-time chat interface
    - Progress tracking visualizations
@@ -139,7 +139,7 @@ Technical Structure
    - Error boundaries
    - Toast notifications
 
-🔌 REST API Integration
+REST API Integration
 1. Authentication Endpoints:
    ```typescript
    POST /api/auth/login
@@ -170,18 +170,20 @@ Technical Structure
    PUT    /api/chat/mark-read
    ```
 
-🔐 API Security
+ API Security
 - JWT token authentication
 - Role-based access control
 - Rate limiting
 - CORS configuration
 
-📡 Real-time Features
+ Real-time Features
 - WebSocket connection for live chat
 - Server-Sent Events for notifications
 - Real-time progress updates
 
-🎯 Frontend Best Practices
+
+
+Frontend Best Practices
 1. State Management
    - Redux for global state
    - React Query for API cache
@@ -204,59 +206,3 @@ Technical Structure
    - Cypress for E2E testing
 
 
-<<<<<<< HEAD
-
-
-
-
-
-
-
-=================================== Python =============================================
-
-- **Model Training and Execution:** Python is widely used for data science and machine learning tasks. It acts as the "brain developer," training models to perform specific tasks and making them smarter over time.
-  - **Data Processing:** Python scripts preprocess data to prepare it for training or inference.
-  - **Model Training:** Python is used to train machine learning models, adjusting their parameters to improve performance.
-  - **Inference:** Once trained, Python models can be used to make predictions or provide insights based on new data.
-
-
-
-
-- **Java:** Think of Java as the manager who decides what tasks need to be done and how to coordinate them. It ensures that everything runs smoothly and according to plan.
-- **Python:** Python is like the specialist who develops the skills and expertise needed to perform specific tasks. It trains the models to be smart and capable of making decisions based on data.
-
-- Java handles the organization and control (like a manager)
-- Python handles the AI/machine learning parts (like a specialist)
-
-5. **Project Organization**
-
-HTTP Method	Endpoint	Description	Service Method
-GET	/api/rules/default	Get default lecture rules	getDefaultRules
-PUT	/api/rules/default	Update default lecture rules	updateDefaultRules
-GET	/api/rules/individual/{id}	Get individual lecture rules	getIndividualRules
-PUT	/api/rules/individual/{id}	Update individual lecture rules	updateIndividualRules
-
-🏗️ Controller-Service Mapping Summary
-	1.	StudentController → StudentService
-	2.	TeacherController → TeacherControlService
-	3.	StudyMaterialController → StudyMaterialService, PDForchestration
-	4.	LectureController → LectureService
-	5.	AIController → PDForchestration, BotActivationService
-	6.	RulesController → DefaultLectureRulesService, IndividualLectureRulesService
-
-
-
-
-
-
-
-✅ Why This Design Works
-
-The project is well-organized with separate sections for:
-- Configuration files
-- Data management for each subject
-- Training data for the AI
-- Code for both backend and frontend
-- Deployment tools
-=======
->>>>>>> 462f374 (README.md)
