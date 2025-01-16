@@ -57,6 +57,15 @@ Teachers can upload topics of interest and curriculum for bot to analyze, track 
 
  **AI Model Lifecycle: Training and Evolution**
 
+
+The AI goes through three stages:
+- Initial Training: Learns the basics of all subjects
+- Fine-Tuning: Gets better at specific classroom needs
+- Continuous Training: Constantly improves how it interacts with students
+
+
+ 
+ 
  1. Initial Training
 	•	Purpose: Build a robust foundation by training the model on extensive K-12 subject datasets.
 	•	Location: models/initial_training/
@@ -78,13 +87,6 @@ Teachers can upload topics of interest and curriculum for bot to analyze, track 
 	•	Learning Pattern Recognition: Captures how individual students and entire classrooms respond best to lessons.
 	•	Dynamic Adjustments: Updates in real-time based on recurring interactions and engagement levels.
 	•	Outcome: A chatbot that feels more natural, empathetic, and tailored to individual and group dynamics every day.
-
-The AI goes through three stages:
-- Initial Training: Learns the basics of all subjects
-- Fine-Tuning: Gets better at specific classroom needs
-- Continuous Training: Constantly improves how it interacts with students
-
-
 
 
 
