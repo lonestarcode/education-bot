@@ -1,9 +1,9 @@
-Education Bot trained on custom models, managed by teachers, designed to assist students in enhancing learning outcomes. 
-This bot offers dynamic tutoring across various subjects, provides teachers with tools to customize lessons, aids with homework and generates study material, allows for chat with students, adapts to individual learning styles, and monitors student progress.
-
-Its advanced training pipeline ensures ongoing improvement through initial training, fine-tuning, and continuous training mechanisms, delivering an ever-evolving AI model tailored to meet educational needs.
 
 
+The Education Bot is a notable example of an AI agent. This bot is designed to function as an AI tutor, assisting both students and teachers by adapting to individual learning styles and providing dynamic tutoring across various subjects. For students, it offers interactive learning experiences, homework assistance, personalized tutoring, progress tracking, and study tools. Teachers can configure the bot to teach specific subjects, upload and manage study materials, customize lessons, monitor student performance, and control how the bot assists with assignments.  ￼
+The bot’s architecture includes a continuous improvement mechanism through initial training, fine-tuning, and ongoing training, ensuring the AI model evolves to meet educational needs effectively. The technical structure combines a Java backend (Spring Boot) for business logic and Python services for AI and machine learning processing, organized in a microservices architecture for scalability.  ￼
+While the backend logic has been developed, the AI and machine learning components are still under significant development, with custom models needing to be crafted and trained.  ￼
+In summary, the Education Bot exemplifies an AI agent by autonomously performing educational tasks, making decisions based on its environment and objectives, and continuously learning to improve its performance.  
 
 
 ****For Students:****
