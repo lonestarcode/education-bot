@@ -29,12 +29,14 @@ public class LearningAnalyticsService {
 
     private final HttpClient httpClient;
     private final StudentRepository studentRepository;
+    private final PythonScriptExecutor pythonExecutor;
 
-    public PersonalityAdaptiveService(StudentRepository studentRepository) {
+    public LearningAnalyticsService(StudentRepository studentRepository, PythonScriptExecutor pythonExecutor) {
         this.studentRepository = studentRepository;
         this.httpClient = HttpClient.newBuilder()
                 .connectTimeout(java.time.Duration.ofSeconds(10))
                 .build();
+        this.pythonExecutor = pythonExecutor;
     }
 
     /**
@@ -46,7 +48,7 @@ public class LearningAnalyticsService {
         Map<String, String> behaviorTrends = analyzeBehaviorTrends(studentId);
         
         return new StudentProfile.Builder()
-            .withLearningStyle(analyzeLearningPattern(interactions, metrics))
+            .withLearningStyle(analyzeLearningPattern(interactions))
             .withBehaviorProfile(analyzeBehavior(studentId, interactions))
             .withStrengths(analyzeStrengths(metrics))
             .withWeaknesses(analyzeWeaknesses(metrics))
@@ -98,10 +100,32 @@ public class LearningAnalyticsService {
         return sendRequest(behaviorAnalysisEndpoint + "/trends/" + userId);
     }
 
-    private LearningStyle analyzeLearningPattern(List<Interaction> interactions, PerformanceMetrics metrics) {
-        Map<String, Object> analysisData = new HashMap<>();
-        analysisData.put("interactions", interactions);
-        analysisData.put("metrics", metrics);
-        return sendRequest(adaptiveLearningEndpoint, analysisData);
+    public LearningProfile analyzeLearningPattern(List<Interaction> interactions) {
+        // Convert interactions to feature matrix
+        double[][] featureMatrix = convertInteractionsToFeatures(interactions);
+        
+        // Call Python clustering service
+        Map<String, Object> results = pythonExecutor.executeScript(
+            "sklearn_clustering_service.py",
+            "analyze_learning_patterns",
+            featureMatrix
+        );
+        
+        return new LearningProfile(
+            (Integer) results.get("learning_style_cluster"),
+            (Map<String, Object>) results.get("cluster_profile"),
+            (List<Integer>) results.get("peer_group"),
+            (List<String>) results.get("recommended_materials")
+        );
+    }
+    
+    private double[][] convertInteractionsToFeatures(List<Interaction> interactions) {
+        // Convert student interactions into a feature matrix for clustering
+        // Features might include:
+        // - Time spent on different types of content
+        // - Performance on assessments
+        // - Interaction patterns with different learning materials
+        // ... implementation details ...
+        return new double[0][0]; // Placeholder
     }
 } 

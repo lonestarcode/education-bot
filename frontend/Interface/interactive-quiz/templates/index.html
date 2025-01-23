@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+    <div class="container mx-auto max-w-3xl px-4 py-8">
+        <div id="quiz-container" class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div id="progress-container" class="flex items-center mb-4">
+                <div id="progress-bar" class="flex-grow h-2 bg-gray-200 rounded-full overflow-hidden mr-4">
+                    <div id="progress" class="h-full bg-blue-500 transition-all duration-300 ease-in-out"></div>
+                </div>
+                <div id="question-counter" class="font-bold text-blue-600"></div>
+            </div>
+            <div id="question" class="text-xl font-semibold mb-4"></div>
+            <div id="options" class="grid gap-4 mb-4 sm:grid-cols-2"></div>
+            <div id="result" class="font-bold text-center mb-4"></div>
+            <button id="start-button" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300">Start Quiz</button>
+            <button id="next-button" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 hidden">Next Question</button>
+        </div>
+
+        <div id="leaderboard-container" class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold text-blue-600 mb-4">Leaderboard</h2>
+            <ul id="leaderboard" class="space-y-2"></ul>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0;
+        let questions = [];
+        let score = 0;
+
+        document.getElementById('start-button').addEventListener('click', startQuiz);
+        document.getElementById('next-button').addEventListener('click', nextQuestion);
+
+        function startQuiz() {
+            console.log('Starting quiz...');
+            fetch('/api/questions')
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch questions');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Received questions:', data);
+                    if (data.length === 0) {
+                        throw new Error('No questions received');
+                    }
+                    questions = data;
+                    currentQuestionIndex = 0;
+                    score = 0;
+                    displayQuestion();
+                    document.getElementById('start-button').classList.add('hidden');
+                    document.getElementById('next-button').classList.remove('hidden');
+                })
+                .catch(error => {
+                    console.error('Error fetching questions:', error);
+                    alert('Error fetching questions. Please try again later.');
+                });
+        }
+
+        function displayQuestion() {
+            console.log('Displaying question:', currentQuestionIndex + 1);
+            if (currentQuestionIndex < questions.length) {
+                const question = questions[currentQuestionIndex];
+                document.getElementById('question').textContent = question.question_text;
+
+                const optionsDiv = document.getElementById('options');
+                optionsDiv.innerHTML = '';
+
+                ['A', 'B', 'C', 'D'].forEach((option) => {
+                    const optionElement = document.createElement('button');
+                    optionElement.textContent = question[`option_${option.toLowerCase()}`];
+                    optionElement.onclick = () => handleAnswer(option);
+                    optionElement.className = 'w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded transition duration-300';
+                    optionsDiv.appendChild(optionElement);
+                });
+
+                updateProgress();
+                document.getElementById('result').textContent = '';
+                document.getElementById('next-button').classList.add('hidden');
+            } else {
+                endQuiz();
+            }
+        }
+
+        function handleAnswer(selectedOption) {
+            const correctOption = questions[currentQuestionIndex].correct_option;
+            const options = document.getElementById('options').children;
+
+            for (let option of options) {
+                option.disabled = true;
+                if (option.textContent === questions[currentQuestionIndex][`option_${correctOption.toLowerCase()}`]) {
+                    option.classList.remove('bg-gray-200', 'hover:bg-gray-300');
+                    option.classList.add('bg-green-500', 'text-white');
+                }
+            }
+
+            if (selectedOption === correctOption) {
+                score++;
+                document.getElementById('result').textContent = 'Correct!';
+                document.getElementById('result').className = 'font-bold text-center mb-4 text-green-500';
+            } else {
+                const selectedButton = Array.from(options).find(
+                    option => option.textContent === questions[currentQuestionIndex][`option_${selectedOption.toLowerCase()}`]
+                );
+                selectedButton.classList.remove('bg-gray-200', 'hover:bg-gray-300');
+                selectedButton.classList.add('bg-red-500', 'text-white');
+                document.getElementById('result').textContent = 'Incorrect. The correct answer was ' + correctOption + '.';
+                document.getElementById('result').className = 'font-bold text-center mb-4 text-red-500';
+            }
+
+            document.getElementById('next-button').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                displayQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+            document.getElementById('question-counter').textContent = `Question ${currentQuestionIndex + 1}/${questions.length}`;
+        }
+
+        function endQuiz() {
+            document.getElementById('question').textContent = `Quiz Completed! Your score is ${score}/${questions.length}.`;
+            document.getElementById('options').innerHTML = '';
+            document.getElementById('next-button').classList.add('hidden');
+            document.getElementById('result').textContent = '';
+            submitScore();
+        }
+
+        function submitScore() {
+            const username = prompt('Enter your username to submit your score:');
+            if (username) {
+                fetch('/api/submit_score', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        score: score,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message);
+                    fetchLeaderboard();
+                })
+                .catch(error => {
+                    console.error('Error submitting score:', error);
+                    alert('Error submitting score. Please try again later.');
+                });
+            }
+        }
+
+        function fetchLeaderboard() {
+            console.log('Fetching leaderboard...');
+            fetch('/api/leaderboard')
+                .then(response => {
+                    console.log('Leaderboard response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch leaderboard');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Received leaderboard data:', data);
+                    const leaderboard = document.getElementById('leaderboard');
+                    leaderboard.innerHTML = '';
+
+                    data.forEach((entry, index) => {
+                        const li = document.createElement('li');
+                        li.textContent = `${index + 1}. ${entry.username}: ${entry.score}`;
+                        li.className = 'bg-gray-100 rounded p-2';
+                        leaderboard.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching leaderboard:', error);
+                });
+        }
+
+        fetchLeaderboard();
+    </script>
+</body>
+</html>
